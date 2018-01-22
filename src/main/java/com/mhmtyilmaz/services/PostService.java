@@ -1,6 +1,7 @@
 package com.mhmtyilmaz.services;
 
 import com.mhmtyilmaz.entities.Post;
+import com.mhmtyilmaz.entities.User;
 import com.mhmtyilmaz.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class PostService {
     }
     public void insert(Post post){
         postRepository.save(post);
+    }
+
+    public List<Post> findByUser(User user){
+        return postRepository.findByCreatorId(user.getId());
     }
 
 }

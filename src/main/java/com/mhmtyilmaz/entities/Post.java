@@ -20,5 +20,5 @@ public class Post {
     private Date dateCreated;
 
     @ManyToOne
-    private User creater;
+    private User creator;
 }

@@ -4,12 +4,10 @@ import com.mhmtyilmaz.config.CustomUserDetails;
 import com.mhmtyilmaz.entities.Post;
 import com.mhmtyilmaz.services.PostService;
 import com.mhmtyilmaz.services.UserService;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -32,7 +30,7 @@ public class BlogController {
     public String publishPost(@RequestBody Post post){
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (post.getDateCreated() == null) post.setDateCreated(new Date());
-        post.setCreater(userService.getUser(customUserDetails.getUsername()));
+        post.setCreator(userService.getUser(customUserDetails.getUsername()));
         postService.insert(post);
 
         return "Post was published";
@@ -41,5 +39,10 @@ public class BlogController {
     @GetMapping(value = "/")
     public String index(){
         return "index";
+    }
+
+    @GetMapping(value = "/posts/{username}")
+    public List<Post> postsByUserName(@PathVariable String username){
+        return postService.findByUser(userService.getUser(username));
     }
 }
