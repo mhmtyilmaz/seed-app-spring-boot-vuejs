@@ -4,7 +4,7 @@ import com.mhmtyilmaz.config.CustomUserDetails;
 import com.mhmtyilmaz.entities.Post;
 import com.mhmtyilmaz.services.PostService;
 import com.mhmtyilmaz.services.UserService;
-import javafx.geometry.Pos;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/posts")
 public class BlogController {
 
     @Autowired
@@ -21,12 +22,12 @@ public class BlogController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/posts")
+    @GetMapping
     public List<Post> getAllPosts(){
         return postService.getAllPosts();
     }
 
-    @PostMapping(value = "/post")
+    @PostMapping
     public String publishPost(@RequestBody Post post){
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (post.getDateCreated() == null) post.setDateCreated(new Date());
@@ -36,12 +37,7 @@ public class BlogController {
         return "Post was published";
     }
 
-    @GetMapping(value = "/")
-    public String index(){
-        return "index";
-    }
-
-    @GetMapping(value = "/posts/{username}")
+    @GetMapping(value = "/{username}")
     public List<Post> postsByUserName(@PathVariable String username){
         return postService.findByUser(userService.getUser(username));
     }

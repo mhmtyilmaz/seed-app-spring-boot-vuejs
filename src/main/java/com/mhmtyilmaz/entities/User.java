@@ -1,5 +1,6 @@
 package com.mhmtyilmaz.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ public class User {
     @GeneratedValue
     private Long id;
     private String username;
+    @JsonIgnore
     private String password;
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Role> roles;

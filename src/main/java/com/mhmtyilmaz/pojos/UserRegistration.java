@@ -1,7 +1,18 @@
 package com.mhmtyilmaz.pojos;
 
-/**
- * Created by MEHMET on 27.1.2018.
- */
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserRegistration {
+
+    private String username;
+    private String password;
+    private String passwordConfiguration;
 }

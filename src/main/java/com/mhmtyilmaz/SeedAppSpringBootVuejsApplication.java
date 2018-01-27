@@ -36,7 +36,6 @@ public class SeedAppSpringBootVuejsApplication {
 		//Setup a default user if db is empty
 		if (repository.count()==0){
 			service.save(new User("user", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
-			service.save(new User("user1", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
 		}
 		builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
 	}
